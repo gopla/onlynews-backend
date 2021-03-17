@@ -9,6 +9,14 @@ module.exports = {
 			next(error)
 		}
 	},
+	show: async (req, res, next) => {
+		try {
+			const data = await newsService.getNewsById(req.params.id)
+			res.send(data)
+		} catch (error) {
+			next(error)
+		}
+	},
 	topic: async (req, res, next) => {
 		try {
 			const data = await newsService.getNewsByTopic(req.params.topic)

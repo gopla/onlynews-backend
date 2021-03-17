@@ -15,6 +15,19 @@ module.exports = {
 		})
 	},
 
+	getNewsById: (Id) => {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const doc = await News.findById(Id)
+
+				if (doc) resolve(doc)
+				else throw new ErrorHandler(404, 'News not found')
+			} catch (error) {
+				reject(error)
+			}
+		})
+	},
+
 	getNewsByTopic: (topic) => {
 		return new Promise(async (resolve, reject) => {
 			try {

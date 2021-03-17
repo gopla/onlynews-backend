@@ -4,7 +4,7 @@ const morgan = require('morgan')
 const cors = require('cors')
 const moment = require('moment')
 
-const { handleError } = require('./utils/error')
+const { ErrorHandler, handleError } = require('./utils/error')
 const routes = require('./config/routes')
 
 const app = express()

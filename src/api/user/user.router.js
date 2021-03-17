@@ -4,7 +4,9 @@ const router = express.Router()
 const con = require('./user.controller')
 
 router.get(`/`, con.index)
-router.get(`/auth/google`, con.login)
-router.get(`/auth_callback`, con.callback)
+router.post(`/`, con.store)
+
+router.post(`/login`, con.login)
+router.post(`/register`, con.register)
 
 module.exports = router

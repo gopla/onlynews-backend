@@ -5,14 +5,18 @@ module.exports = model(
 	new Schema(
 		{
 			name: {
-        type: String,
-        required: true,
-      },
-      email: {
-        type: String,
-        required: true,
-        unique: true,
-      },
+				type: String,
+				required: true,
+			},
+			email: {
+				type: String,
+				required: true,
+				unique: true,
+			},
+			googleId: {
+				type: String,
+				required: true,
+			},
 		},
 		{
 			collection: 'user',
