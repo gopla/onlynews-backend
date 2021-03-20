@@ -35,7 +35,9 @@ module.exports = {
 	getNewsByTopic: (topic) => {
 		return new Promise(async (resolve, reject) => {
 			try {
-				const doc = await News.find({ topic }).sort({ createdAt: 'desc' })
+				const doc = await News.find({ topic })
+					.select('-news -createdAt -updatedAt -__v')
+					.sort({ createdAt: 'desc' })
 
 				if (doc) resolve(doc)
 				else throw new ErrorHandler(404, 'News not found')
@@ -47,7 +49,9 @@ module.exports = {
 	getNewsByPublisher: (publisher) => {
 		return new Promise(async (resolve, reject) => {
 			try {
-				const doc = await News.find({ publisher }).sort({ createdAt: 'desc' })
+				const doc = await News.find({ publisher })
+					.select('-news -createdAt -updatedAt -__v')
+					.sort({ createdAt: 'desc' })
 
 				if (doc) resolve(doc)
 				else throw new ErrorHandler(404, 'News not found')
