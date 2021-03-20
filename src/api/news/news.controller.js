@@ -4,7 +4,11 @@ module.exports = {
 	index: async (req, res, next) => {
 		try {
 			const data = await newsService.getAllNews()
-			res.send(data)
+			res.send({
+				success: true,
+				statusCode: 200,
+				data,
+			})
 		} catch (error) {
 			next(error)
 		}
@@ -12,7 +16,11 @@ module.exports = {
 	show: async (req, res, next) => {
 		try {
 			const data = await newsService.getNewsById(req.params.id)
-			res.send(data)
+			res.send({
+				success: true,
+				statusCode: 200,
+				data,
+			})
 		} catch (error) {
 			next(error)
 		}
@@ -20,7 +28,11 @@ module.exports = {
 	topic: async (req, res, next) => {
 		try {
 			const data = await newsService.getNewsByTopic(req.params.topic)
-			res.send(data)
+			res.send({
+				success: true,
+				statusCode: 200,
+				data,
+			})
 		} catch (error) {
 			next(error)
 		}
@@ -28,7 +40,11 @@ module.exports = {
 	publisher: async (req, res, next) => {
 		try {
 			const data = await newsService.getNewsByPublisher(req.params.publisher)
-			res.send(data)
+			res.send({
+				success: true,
+				statusCode: 200,
+				data,
+			})
 		} catch (error) {
 			next(error)
 		}

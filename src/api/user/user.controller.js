@@ -3,8 +3,12 @@ const userService = require('./user.service')
 module.exports = {
 	async index(req, res, next) {
 		try {
-			const result = await userService.getAllUser()
-			res.send(result)
+			const data = await userService.getAllUser()
+			res.send({
+				success: true,
+				statusCode: 200,
+				data,
+			})
 		} catch (error) {
 			next(error)
 		}
@@ -12,8 +16,12 @@ module.exports = {
 
 	async store(req, res, next) {
 		try {
-			const result = await userService.storeNewUser(req.body)
-			res.send(result)
+			const data = await userService.storeNewUser(req.body)
+			res.send({
+				success: true,
+				statusCode: 200,
+				data,
+			})
 		} catch (error) {
 			next(error)
 		}
@@ -21,8 +29,12 @@ module.exports = {
 
 	async login(req, res, next) {
 		try {
-			const result = await userService.login(req.body)
-			res.send(result)
+			const data = await userService.login(req.body)
+			res.send({
+				success: true,
+				statusCode: 200,
+				data,
+			})
 		} catch (error) {
 			next(error)
 		}
@@ -30,8 +42,12 @@ module.exports = {
 
 	async register(req, res, next) {
 		try {
-			const result = await userService.register(req.body)
-			res.send(result)
+			const data = await userService.register(req.body)
+			res.send({
+				success: true,
+				statusCode: 200,
+				data,
+			})
 		} catch (error) {
 			next(error)
 		}
