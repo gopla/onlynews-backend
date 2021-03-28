@@ -42,10 +42,22 @@ module.exports = {
 	getNewsById: (Id) => {
 		return new Promise(async (resolve, reject) => {
 			try {
+				let resp = []
 				const doc = await News.findById(Id)
 				await News.findOneAndUpdate({ _id: Id }, { $inc: { views: 1 } }).exec()
 
-				if (doc) resolve(doc)
+				let bookData = await Bookmark.find({ user })
+				for (let i = 0; i < doc.length; i++) {
+					doc[i] = doc[i].toJSON()
+					doc[i].isBookmark = false
+					for (let j = 0; j < bookData.length; j++) {
+						if (bookData[j].news.toString() == doc[i]._id.toString())
+							doc[i].isBookmark = true
+					}
+					resp.push(doc[i])
+				}
+
+				if (doc) resolve(resp)
 				else throw new ErrorHandler(404, 'News not found')
 			} catch (error) {
 				reject(error)
