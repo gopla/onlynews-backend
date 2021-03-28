@@ -49,4 +49,17 @@ module.exports = {
 			next(error)
 		}
 	},
+
+	title: async (req, res, next) => {
+		try {
+			const data = await newsService.getNewsByTitle(req.params.title)
+			res.send({
+				success: true,
+				statusCode: 200,
+				data,
+			})
+		} catch (error) {
+			next(error)
+		}
+	},
 }

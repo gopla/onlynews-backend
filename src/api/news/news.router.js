@@ -7,5 +7,6 @@ router.get(`/`, con.index)
 router.get(`/:id`, con.show)
 router.get(`/topic/:topic`, con.topic)
 router.get(`/publisher/:publisher`, con.publisher)
+router.get(`/title/:title`, con.title)
 
 module.exports = router

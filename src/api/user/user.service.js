@@ -27,25 +27,8 @@ module.exports = {
 	login: async (body) => {
 		return new Promise(async (resolve, reject) => {
 			try {
-				const user = await User.findOne({ email: body.email })
-				if (user.length == 0) throw new ErrorHandler(404, 'User not found')
-				const token = await sign({ user }, process.env.JWT_SECRET)
-				if (token) resolve({ token })
-			} catch (error) {
-				reject(error)
-			}
-		})
-	},
-
-	register: async (body) => {
-		return new Promise(async (resolve, reject) => {
-			try {
-				const userExist = await User.find({ email: body.email })
-				if (userExist.length != 0)
-					throw new ErrorHandler(409, 'Email already exist')
-
-				const doc = await User.create(body)
-				const user = doc
+				let user = await User.findOne({ email: body.email })
+				if (user == null) user = await User.create(body)
 				const token = await sign({ user }, process.env.JWT_SECRET)
 				if (token) resolve({ token })
 			} catch (error) {

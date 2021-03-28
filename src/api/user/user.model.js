@@ -17,6 +17,9 @@ module.exports = model(
 				type: String,
 				required: true,
 			},
+			foto: {
+				type: String,
+			},
 		},
 		{
 			collection: 'user',
