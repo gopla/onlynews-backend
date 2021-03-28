@@ -15,7 +15,7 @@ module.exports = {
 	},
 	show: async (req, res, next) => {
 		try {
-			const data = await bookmarkService.getBookmarkPerUser(req.params.id)
+			const data = await bookmarkService.getBookmarkPerUser(req.user._id)
 			res.send({
 				success: true,
 				statusCode: 200,
@@ -27,7 +27,10 @@ module.exports = {
 	},
 	store: async (req, res, next) => {
 		try {
-			const data = await bookmarkService.storeBookmark(req.body)
+			const data = await bookmarkService.storeBookmark({
+				news: req.body.news,
+				user: req.user._id,
+			})
 			res.send({
 				success: true,
 				statusCode: 200,

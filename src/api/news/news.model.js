@@ -30,6 +30,10 @@ module.exports = model(
 			news: {
 				type: String,
 			},
+			views: {
+				type: Number,
+				default: 0,
+			},
 		},
 		{
 			collection: 'news',

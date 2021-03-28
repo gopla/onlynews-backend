@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
 	if (token) {
 		jwt.verify(token, process.env.JWT_SECRET, (err, payload) => {
 			if (err) throw err
-			req.user = payload
+			req.user = payload.user
 			next()
 		})
 	} else {

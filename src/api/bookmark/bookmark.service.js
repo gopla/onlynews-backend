@@ -19,7 +19,6 @@ module.exports = {
 		return new Promise(async (resolve, reject) => {
 			try {
 				const doc = await Bookmark.find({ user })
-
 				if (doc) resolve(doc)
 				else throw new ErrorHandler(404, 'News not found')
 			} catch (error) {

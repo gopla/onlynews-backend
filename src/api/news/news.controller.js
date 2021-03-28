@@ -3,7 +3,9 @@ const newsService = require('./news.service')
 module.exports = {
 	index: async (req, res, next) => {
 		try {
-			const data = await newsService.getAllNews()
+			const data = req.user
+				? await newsService.getAllNews(req.user._id)
+				: await newsService.getAllNews()
 			res.send({
 				success: true,
 				statusCode: 200,
@@ -27,7 +29,9 @@ module.exports = {
 	},
 	topic: async (req, res, next) => {
 		try {
-			const data = await newsService.getNewsByTopic(req.params.topic)
+			data = req.user
+				? await newsService.getNewsByTopic(req.params.topic, req.user._id)
+				: await newsService.getNewsByTopic(req.params.topic)
 			res.send({
 				success: true,
 				statusCode: 200,
@@ -39,7 +43,12 @@ module.exports = {
 	},
 	publisher: async (req, res, next) => {
 		try {
-			const data = await newsService.getNewsByPublisher(req.params.publisher)
+			data = req.user
+				? await newsService.getNewsByPublisher(
+						req.params.publisher,
+						req.user._id,
+				  )
+				: await newsService.getNewsByPublisher(req.params.publisher)
 			res.send({
 				success: true,
 				statusCode: 200,
@@ -52,7 +61,9 @@ module.exports = {
 
 	title: async (req, res, next) => {
 		try {
-			const data = await newsService.getNewsByTitle(req.params.title)
+			data = req.user
+				? await newsService.getNewsByTitle(req.params.title, req.user._id)
+				: await newsService.getNewsByTitle(req.params.title)
 			res.send({
 				success: true,
 				statusCode: 200,
