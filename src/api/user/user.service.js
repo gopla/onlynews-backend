@@ -30,7 +30,13 @@ module.exports = {
 				let user = await User.findOne({ email: body.email })
 				if (user == null) user = await User.create(body)
 				const token = await sign({ user }, process.env.JWT_SECRET)
-				if (token) resolve({ token })
+				if (token)
+					resolve({
+						name: user.name,
+						email: user.email,
+						foto: user.foto,
+						token,
+					})
 			} catch (error) {
 				reject(error)
 			}
