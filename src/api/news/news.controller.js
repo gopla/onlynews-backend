@@ -15,9 +15,12 @@ module.exports = {
 			next(error)
 		}
 	},
+
 	show: async (req, res, next) => {
 		try {
-			const data = await newsService.getNewsById(req.params.id)
+			const data = req.user
+				? await newsService.getNewsById(req.params.id, req.user._id)
+				: await newsService.getNewsById(req.params.id)
 			res.send({
 				success: true,
 				statusCode: 200,
@@ -27,6 +30,7 @@ module.exports = {
 			next(error)
 		}
 	},
+
 	topic: async (req, res, next) => {
 		try {
 			data = req.user
@@ -41,6 +45,7 @@ module.exports = {
 			next(error)
 		}
 	},
+
 	publisher: async (req, res, next) => {
 		try {
 			data = req.user
@@ -64,6 +69,21 @@ module.exports = {
 			data = req.user
 				? await newsService.getNewsByTitle(req.params.title, req.user._id)
 				: await newsService.getNewsByTitle(req.params.title)
+			res.send({
+				success: true,
+				statusCode: 200,
+				data,
+			})
+		} catch (error) {
+			next(error)
+		}
+	},
+
+	usertopic: async (req, res, next) => {
+		try {
+			const data = req.user
+				? await newsService.getNewsByUserTopic(req.user._id)
+				: await newsService.getNewsByUserTopic()
 			res.send({
 				success: true,
 				statusCode: 200,

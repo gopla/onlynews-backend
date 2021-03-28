@@ -1,7 +1,7 @@
 const { model, Schema } = require('mongoose')
 
 module.exports = model(
-	'News',
+	'Usertopic',
 	new Schema(
 		{
 			user: {
@@ -14,7 +14,7 @@ module.exports = model(
 			},
 		},
 		{
-			collection: 'news',
+			collection: 'usertopic',
 			timestamps: true,
 		},
 	),

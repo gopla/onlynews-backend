@@ -1,9 +1,9 @@
-const bookmarkService = require('./bookmark.service')
+const usertopicService = require('./usertopic.service')
 
 module.exports = {
 	index: async (req, res, next) => {
 		try {
-			const data = await bookmarkService.getAllBookmarks()
+			const data = await usertopicService.getAllUserTopics(req.user._id)
 			res.send({
 				success: true,
 				statusCode: 200,
@@ -13,22 +13,11 @@ module.exports = {
 			next(error)
 		}
 	},
-	show: async (req, res, next) => {
-		try {
-			const data = await bookmarkService.getBookmarkPerUser(req.user._id)
-			res.send({
-				success: true,
-				statusCode: 200,
-				data,
-			})
-		} catch (error) {
-			next(error)
-		}
-	},
+
 	store: async (req, res, next) => {
 		try {
-			const data = await bookmarkService.storeBookmark({
-				news: req.body.news,
+			const data = await usertopicService.storeUserTopic({
+				topic: req.body.topic,
 				user: req.user._id,
 			})
 			res.send({
@@ -43,8 +32,8 @@ module.exports = {
 
 	delete: async (req, res, next) => {
 		try {
-			const data = await bookmarkService.deleteBookmark({
-				news: req.body.news,
+			const data = await usertopicService.deleteTopic({
+				topic: req.body.topic,
 				user: req.user._id,
 			})
 			res.send({
