@@ -7,6 +7,6 @@ router.get(`/`, con.index)
 router.post(`/`, con.store)
 
 router.post(`/login`, con.login)
-router.post(`/register`, con.register)
+router.get(`/profile`, con.profile)
 
 module.exports = router

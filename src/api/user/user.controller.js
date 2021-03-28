@@ -1,3 +1,4 @@
+const { profile } = require('./user.service')
 const userService = require('./user.service')
 
 module.exports = {
@@ -40,9 +41,9 @@ module.exports = {
 		}
 	},
 
-	async register(req, res, next) {
+	async profile(req, res, next) {
 		try {
-			const data = await userService.register(req.body)
+			const data = await userService.profile(req.user._id)
 			res.send({
 				success: true,
 				statusCode: 200,

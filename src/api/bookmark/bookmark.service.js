@@ -30,8 +30,10 @@ module.exports = {
 				for (let i = 0; i < doc.length; i++) {
 					doc[i] = doc[i].toJSON()
 					for (let j = 0; j < bookData.length; j++) {
-						if (bookData[j].news.toString() == doc[i]._id.toString())
+						if (bookData[j].news.toString() == doc[i]._id.toString()) {
+							doc[i].isBookmark = true
 							resp.push(doc[i])
+						}
 					}
 				}
 
@@ -59,7 +61,7 @@ module.exports = {
 		})
 	},
 
-	deleteBookmark: async (usertopic) => {
+	deleteBookmark: async (bookmark) => {
 		return new Promise(async (resolve, reject) => {
 			try {
 				const doc = await Bookmark.findOneAndRemove({

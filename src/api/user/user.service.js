@@ -1,6 +1,8 @@
 require('dotenv').config()
 const { ErrorHandler } = require('../../utils/error')
 const User = require('./user.model')
+const UserTopic = require('../usertopic/usertopic.model')
+const Topic = require('../topic/topic.model')
 const { sign } = require('jsonwebtoken')
 
 module.exports = {
@@ -37,6 +39,31 @@ module.exports = {
 						foto: user.foto,
 						token,
 					})
+			} catch (error) {
+				reject(error)
+			}
+		})
+	},
+
+	profile: async (userId) => {
+		return new Promise(async (resolve, reject) => {
+			try {
+				let topic = []
+				let doc = await User.findById(userId).select(
+					'-createdAt -updatedAt -__v',
+				)
+				let dataTopic = await UserTopic.find({ user: userId }).select(
+					'-id -createdAt -updatedAt -__v',
+				)
+
+				for (let i = 0; i < dataTopic.length; i++) {
+					let theTopic = await Topic.findById(dataTopic[i].topic)
+					topic.push(theTopic.name)
+				}
+				doc = doc.toJSON()
+				doc.topic = topic
+
+				if (doc) resolve(doc)
 			} catch (error) {
 				reject(error)
 			}

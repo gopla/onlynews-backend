@@ -38,6 +38,15 @@ module.exports = {
 						createdAt: 'desc',
 					})
 
+				let dataNews = await News.find({ createdAt: { $gt: await getToday() } })
+					.select('-news -createdAt -updatedAt -__v')
+					.sort({
+						createdAt: 'desc',
+					})
+
+				for (let i = 0; i < dataNews.length; i++) {
+					doc.push(dataNews[i])
+				}
 				let bookData = await Bookmark.find({ user })
 				for (let i = 0; i < doc.length; i++) {
 					doc[i] = doc[i].toJSON()
@@ -65,6 +74,7 @@ module.exports = {
 				await News.findOneAndUpdate({ _id: Id }, { $inc: { views: 1 } }).exec()
 
 				let bookData = await Bookmark.find({ user })
+				doc._doc.isBookmark = false
 				for (let j = 0; j < bookData.length; j++) {
 					if (bookData[j].news.toString() == doc._id.toString())
 						doc._doc.isBookmark = true
