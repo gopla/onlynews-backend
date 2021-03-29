@@ -57,7 +57,7 @@ module.exports = {
 					}
 					resp.push(doc[i])
 				}
-
+				resp.length = 30
 				if (doc) resolve(resp)
 				else throw new ErrorHandler(404, 'News not found')
 			} catch (error) {
