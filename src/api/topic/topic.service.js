@@ -5,7 +5,9 @@ module.exports = {
 	getAllTopics: async () => {
 		return new Promise(async (resolve, reject) => {
 			try {
-				const doc = await Topic.find().select('-id -createdAt -updatedAt -__v')
+				const doc = await Topic.find()
+					.select('-id -createdAt -updatedAt -__v -index')
+					.sort('index')
 
 				if (doc) resolve(doc)
 				else throw new ErrorHandler(404, 'News not found')
