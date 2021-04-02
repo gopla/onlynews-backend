@@ -80,4 +80,42 @@ module.exports = {
 			}
 		})
 	},
+
+	loginAndroid: async (body) => {
+		return new Promise(async (resolve, reject) => {
+			try {
+				let topic = []
+				let user = await User.findOne({
+					email: body.email,
+				})
+
+				let isPassMatch = await User.findOne({
+					email: body.email,
+					password: body.password,
+				})
+				if (!isPassMatch) throw new ErrorHandler(404, 'Password tidak cocok')
+				if (user == null) user = await User.create(body)
+				const token = await sign({ user }, process.env.JWT_SECRET)
+				let dataTopic = await UserTopic.find({ user: user._id }).select(
+					'-id -createdAt -updatedAt -__v',
+				)
+				for (let i = 0; i < dataTopic.length; i++) {
+					let theTopic = await Topic.findById(dataTopic[i].topic)
+					topic.push(theTopic.name)
+				}
+				user = user.toJSON()
+				user.topic = topic
+				if (token)
+					resolve({
+						name: user.name,
+						email: user.email,
+						foto: user.foto,
+						topic: user.topic,
+						token,
+					})
+			} catch (error) {
+				reject(error)
+			}
+		})
+	},
 }

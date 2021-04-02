@@ -41,6 +41,19 @@ module.exports = {
 		}
 	},
 
+	async loginAndroid(req, res, next) {
+		try {
+			const data = await userService.loginAndroid(req.body)
+			res.send({
+				success: true,
+				statusCode: 200,
+				data,
+			})
+		} catch (error) {
+			next(error)
+		}
+	},
+
 	async profile(req, res, next) {
 		try {
 			const data = await userService.profile(req.user._id)

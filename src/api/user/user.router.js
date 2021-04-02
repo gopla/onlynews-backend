@@ -7,6 +7,7 @@ router.get(`/`, con.index)
 router.post(`/`, con.store)
 
 router.post(`/login`, con.login)
+router.post(`/loginAndroid`, con.loginAndroid)
 router.get(`/profile`, con.profile)
 
 module.exports = router

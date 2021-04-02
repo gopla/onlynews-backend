@@ -15,7 +15,9 @@ module.exports = model(
 			},
 			googleId: {
 				type: String,
-				required: true,
+			},
+			password: {
+				type: String,
 			},
 			foto: {
 				type: String,
