@@ -11,6 +11,7 @@ module.exports = {
 				data,
 			})
 		} catch (error) {
+			console.log(error)
 			next(error)
 		}
 	},
@@ -24,6 +25,7 @@ module.exports = {
 				data,
 			})
 		} catch (error) {
+			console.log(error)
 			next(error)
 		}
 	},
@@ -37,6 +39,7 @@ module.exports = {
 				data,
 			})
 		} catch (error) {
+			console.log(error)
 			next(error)
 		}
 	},
@@ -50,6 +53,7 @@ module.exports = {
 				data,
 			})
 		} catch (error) {
+			console.log(error)
 			next(error)
 		}
 	},
@@ -63,6 +67,7 @@ module.exports = {
 				data,
 			})
 		} catch (error) {
+			console.log(error)
 			next(error)
 		}
 	},

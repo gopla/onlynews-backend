@@ -38,15 +38,6 @@ module.exports = {
 						createdAt: 'desc',
 					})
 
-				let dataNews = await News.find({ createdAt: { $gt: await getToday() } })
-					.select('-news -createdAt -updatedAt -__v')
-					.sort({
-						createdAt: 'desc',
-					})
-
-				for (let i = 0; i < dataNews.length; i++) {
-					doc.push(dataNews[i])
-				}
 				let bookData = await Bookmark.find({ user })
 				for (let i = 0; i < doc.length; i++) {
 					doc[i] = doc[i].toJSON()
