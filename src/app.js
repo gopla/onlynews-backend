@@ -34,8 +34,18 @@ const adminBro = new AdminBro({
 				listProperties: ['name'],
 			},
 		},
-		require('./api/topic/topic.model'),
-		require('./api/user/user.model'),
+		{
+			resource: require('./api/topic/topic.model'),
+			options: {
+				listProperties: ['name'],
+			},
+		},
+		{
+			resource: require('./api/user/user.model'),
+			options: {
+				listProperties: ['name', 'email'],
+			},
+		},
 	],
 	rootPath: '/admin',
 })
