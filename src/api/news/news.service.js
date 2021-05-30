@@ -6,7 +6,7 @@ const Topic = require('../topic/topic.model')
 const moment = require('moment')
 
 async function getToday() {
-	return await moment().tz('Asia/Jakarta').format('YYYY-MM-DD')
+	return await moment().tz('Asia/Jakarta').add(-2, 'days').format('YYYY-MM-DD')
 }
 
 module.exports = {
