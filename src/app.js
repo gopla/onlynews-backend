@@ -25,7 +25,14 @@ const adminBro = new AdminBro({
 		{
 			resource: require('./api/news/news.model'),
 			options: {
-				listProperties: ['date', 'title', 'link', 'topic', 'publisher'],
+				listProperties: [
+					'date',
+					'title',
+					'link',
+					'topic',
+					'publisher',
+					'createdAt',
+				],
 			},
 		},
 		{
