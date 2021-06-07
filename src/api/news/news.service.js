@@ -13,42 +13,54 @@ module.exports = {
 	getAllNews: (user) => {
 		return new Promise(async (resolve, reject) => {
 			try {
+				// let resp = []
+				// let topic = []
+				// let dataTopic = await UserTopic.find({ user }).select(
+				// 	'-id -createdAt -updatedAt -__v',
+				// )
+
+				// for (let i = 0; i < dataTopic.length; i++) {
+				// 	let theTopic = await Topic.findById(dataTopic[i].topic)
+				// 	topic.push({ topic: theTopic.name.toLowerCase() })
+				// }
+
+				// let whereClause = user
+				// 	? {
+				// 			createdAt: { $gt: await getToday() },
+				// 			$or: topic,
+				// 	  }
+				// 	: {
+				// 			createdAt: { $gt: await getToday() },
+				// 	  }
+				// let doc = await News.find(whereClause)
+				// 	.select('-news -createdAt -updatedAt -__v')
+				// 	.sort({
+				// 		createdAt: 'desc',
+				// 	})
+
+				// let bookData = await Bookmark.find({ user })
+				// for (let i = 0; i < doc.length; i++) {
+				// 	doc[i] = doc[i].toJSON()
+				// 	doc[i].isBookmark = false
+				// 	for (let j = 0; j < bookData.length; j++) {
+				// 		if (bookData[j].news.toString() == doc[i]._id.toString())
+				// 			doc[i].isBookmark = true
+				// 	}
+				// 	resp.push(doc[i])
+				// }
 				let resp = []
-				let topic = []
-				let dataTopic = await UserTopic.find({ user }).select(
-					'-id -createdAt -updatedAt -__v',
-				)
-
-				for (let i = 0; i < dataTopic.length; i++) {
-					let theTopic = await Topic.findById(dataTopic[i].topic)
-					topic.push({ topic: theTopic.name.toLowerCase() })
-				}
-
-				let whereClause = user
-					? {
-							createdAt: { $gt: await getToday() },
-							$or: topic,
-					  }
-					: {
-							createdAt: { $gt: await getToday() },
-					  }
-				let doc = await News.find(whereClause)
+				let doc = await News.find()
 					.select('-news -createdAt -updatedAt -__v')
 					.sort({
 						createdAt: 'desc',
 					})
-
-				let bookData = await Bookmark.find({ user })
+				doc.length >= 30 ? (doc.length = 30) : doc.length
 				for (let i = 0; i < doc.length; i++) {
-					doc[i] = doc[i].toJSON()
-					doc[i].isBookmark = false
-					for (let j = 0; j < bookData.length; j++) {
-						if (bookData[j].news.toString() == doc[i]._id.toString())
-							doc[i].isBookmark = true
-					}
-					resp.push(doc[i])
+					let element = doc[i]
+					element = element.toJSON()
+					element.isBookmark = false
+					resp.push(element)
 				}
-				resp.length >= 30 ? (resp.length = 30) : resp.length
 				if (doc) resolve(resp)
 				else throw new ErrorHandler(404, 'News not found')
 			} catch (error) {
