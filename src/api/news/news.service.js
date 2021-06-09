@@ -10,7 +10,7 @@ async function getToday() {
 }
 
 module.exports = {
-	getAllNews: (user) => {
+	getAllNews: (bookmark) => {
 		return new Promise(async (resolve, reject) => {
 			try {
 				// let resp = []
@@ -49,7 +49,9 @@ module.exports = {
 				// 	resp.push(doc[i])
 				// }
 				let resp = []
-				let doc = await News.find()
+				let doc = await News.find({
+					createdAt: { $gt: await getToday() },
+				})
 					.select('-news -createdAt -updatedAt -__v')
 					.sort({
 						createdAt: 'desc',
@@ -59,6 +61,9 @@ module.exports = {
 					let element = doc[i]
 					element = element.toJSON()
 					element.isBookmark = false
+					for (let j = 0; j < bookmark.length; j++) {
+						if (bookmark[j] == element._id.toString()) element.isBookmark = true
+					}
 					resp.push(element)
 				}
 				if (doc) resolve(resp)
@@ -69,18 +74,17 @@ module.exports = {
 		})
 	},
 
-	getNewsById: (Id, user) => {
+	getNewsById: (Id, bookmark) => {
 		return new Promise(async (resolve, reject) => {
 			try {
 				let resp = {}
 				let doc = await News.findById(Id).select('-__v -createdAt -updatedAt')
 				await News.findOneAndUpdate({ _id: Id }, { $inc: { views: 1 } }).exec()
 
-				let bookData = await Bookmark.find({ user })
+				// let bookData = await Bookmark.find({ user })
 				doc._doc.isBookmark = false
-				for (let j = 0; j < bookData.length; j++) {
-					if (bookData[j].news.toString() == doc._id.toString())
-						doc._doc.isBookmark = true
+				for (let j = 0; j < bookmark.length; j++) {
+					if (bookmark[j] == doc._id.toString()) doc._doc.isBookmark = true
 					else doc._doc.isBookmark = false
 				}
 
@@ -92,7 +96,7 @@ module.exports = {
 		})
 	},
 
-	getNewsByTopic: (topic, user) => {
+	getNewsByTopic: (topic, bookmark) => {
 		return new Promise(async (resolve, reject) => {
 			try {
 				let resp = []
@@ -100,13 +104,12 @@ module.exports = {
 					.select('-news -createdAt -updatedAt -__v')
 					.sort({ createdAt: 'desc' })
 
-				let bookData = await Bookmark.find({ user })
+				// let bookData = await Bookmark.find({ user })
 				for (let i = 0; i < doc.length; i++) {
 					doc[i] = doc[i].toJSON()
 					doc[i].isBookmark = false
-					for (let j = 0; j < bookData.length; j++) {
-						if (bookData[j].news.toString() == doc[i]._id.toString())
-							doc[i].isBookmark = true
+					for (let j = 0; j < bookmark.length; j++) {
+						if (bookmark[j] == doc[i]._id.toString()) doc[i].isBookmark = true
 					}
 					resp.push(doc[i])
 				}
@@ -119,7 +122,7 @@ module.exports = {
 		})
 	},
 
-	getNewsByPublisher: (publisher, user) => {
+	getNewsByPublisher: (publisher, bookmark) => {
 		return new Promise(async (resolve, reject) => {
 			try {
 				let resp = []
@@ -127,13 +130,12 @@ module.exports = {
 					.select('-news -createdAt -updatedAt -__v')
 					.sort({ createdAt: 'desc' })
 
-				let bookData = await Bookmark.find({ user })
+				// let bookData = await Bookmark.find({ user })
 				for (let i = 0; i < doc.length; i++) {
 					doc[i] = doc[i].toJSON()
 					doc[i].isBookmark = false
-					for (let j = 0; j < bookData.length; j++) {
-						if (bookData[j].news.toString() == doc[i]._id.toString())
-							doc[i].isBookmark = true
+					for (let j = 0; j < bookmark.length; j++) {
+						if (bookmark[j] == doc[i]._id.toString()) doc[i].isBookmark = true
 					}
 					resp.push(doc[i])
 				}
@@ -148,7 +150,7 @@ module.exports = {
 
 	getRandomNews: () => {},
 
-	getNewsByTitle: (title, user) => {
+	getNewsByTitle: (title, bookmark) => {
 		return new Promise(async (resolve, reject) => {
 			try {
 				let resp = []
@@ -156,13 +158,12 @@ module.exports = {
 					.select('-news -createdAt -updatedAt -__v')
 					.sort({ createdAt: 'desc' })
 
-				let bookData = await Bookmark.find({ user })
+				// let bookData = await Bookmark.find({ user })
 				for (let i = 0; i < doc.length; i++) {
 					doc[i] = doc[i].toJSON()
 					doc[i].isBookmark = false
-					for (let j = 0; j < bookData.length; j++) {
-						if (bookData[j].news.toString() == doc[i]._id.toString())
-							doc[i].isBookmark = true
+					for (let j = 0; j < bookmark.length; j++) {
+						if (bookmark[j] == doc[i]._id.toString()) doc[i].isBookmark = true
 					}
 					resp.push(doc[i])
 				}

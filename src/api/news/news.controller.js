@@ -3,9 +3,7 @@ const newsService = require('./news.service')
 module.exports = {
 	index: async (req, res, next) => {
 		try {
-			const data = req.user
-				? await newsService.getAllNews(req.user._id)
-				: await newsService.getAllNews()
+			const data = await newsService.getAllNews(req.body.bookmark)
 			res.send({
 				success: true,
 				statusCode: 200,
@@ -19,9 +17,10 @@ module.exports = {
 
 	show: async (req, res, next) => {
 		try {
-			const data = req.user
-				? await newsService.getNewsById(req.params.id, req.user._id)
-				: await newsService.getNewsById(req.params.id)
+			const data = await newsService.getNewsById(
+				req.params.id,
+				req.body.bookmark,
+			)
 			res.send({
 				success: true,
 				statusCode: 200,
@@ -35,9 +34,10 @@ module.exports = {
 
 	topic: async (req, res, next) => {
 		try {
-			data = req.user
-				? await newsService.getNewsByTopic(req.params.topic, req.user._id)
-				: await newsService.getNewsByTopic(req.params.topic)
+			data = await newsService.getNewsByTopic(
+				req.params.topic,
+				req.body.bookmark,
+			)
 			res.send({
 				success: true,
 				statusCode: 200,
@@ -51,12 +51,10 @@ module.exports = {
 
 	publisher: async (req, res, next) => {
 		try {
-			data = req.user
-				? await newsService.getNewsByPublisher(
-						req.params.publisher,
-						req.user._id,
-				  )
-				: await newsService.getNewsByPublisher(req.params.publisher)
+			data = await newsService.getNewsByPublisher(
+				req.params.publisher,
+				req.body.bookmark,
+			)
 			res.send({
 				success: true,
 				statusCode: 200,
@@ -70,9 +68,10 @@ module.exports = {
 
 	title: async (req, res, next) => {
 		try {
-			data = req.user
-				? await newsService.getNewsByTitle(req.params.title, req.user._id)
-				: await newsService.getNewsByTitle(req.params.title)
+			data = await newsService.getNewsByTitle(
+				req.params.title,
+				req.body.bookmark,
+			)
 			res.send({
 				success: true,
 				statusCode: 200,
