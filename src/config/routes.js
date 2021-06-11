@@ -15,9 +15,9 @@ router.use('/user', USER)
 router.use('/publisher', PUBLISHER)
 router.use('/topic', TOPIC)
 
+router.use('/bookmark', BOOKMARK)
 router.use(verifyToken)
 router.use('/my', USER)
-router.use('/bookmark', BOOKMARK)
 router.use('/usertopic', USERTOPIC)
 router.use('/loggedin/news', NEWS)
 
