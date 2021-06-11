@@ -16,27 +16,47 @@ module.exports = {
 		})
 	},
 
-	getBookmarkPerUser: async (user) => {
+	getBookmarkPerUser: async (bookmark) => {
 		return new Promise(async (resolve, reject) => {
 			try {
+				// let resp = []
+				// let doc = await News.find()
+				// 	.select('-news -createdAt -updatedAt -__v')
+				// 	.sort({
+				// 		createdAt: 'desc',
+				// 	})
+
+				// let bookData = await Bookmark.find({ user })
+				// for (let i = 0; i < doc.length; i++) {
+				// 	doc[i] = doc[i].toJSON()
+				// 	for (let j = 0; j < bookData.length; j++) {
+				// 		if (bookData[j].news.toString() == doc[i]._id.toString()) {
+				// 			doc[i].isBookmark = true
+				// 			resp.push(doc[i])
+				// 		}
+				// 	}
+				// }
+
+				// if (doc) resolve(resp)
 				let resp = []
-				let doc = await News.find()
+				let doc = await News.find({
+					_id: {
+						$in: bookmark,
+					},
+				})
 					.select('-news -createdAt -updatedAt -__v')
 					.sort({
 						createdAt: 'desc',
 					})
-
-				let bookData = await Bookmark.find({ user })
 				for (let i = 0; i < doc.length; i++) {
-					doc[i] = doc[i].toJSON()
-					for (let j = 0; j < bookData.length; j++) {
-						if (bookData[j].news.toString() == doc[i]._id.toString()) {
-							doc[i].isBookmark = true
-							resp.push(doc[i])
-						}
+					let element = doc[i]
+					element = element.toJSON()
+					element.isBookmark = false
+					for (let j = 0; j < bookmark.length; j++) {
+						if (bookmark[j] == element._id.toString()) element.isBookmark = true
 					}
+					resp.push(element)
 				}
-
 				if (doc) resolve(resp)
 				else throw new ErrorHandler(404, 'News not found')
 			} catch (error) {

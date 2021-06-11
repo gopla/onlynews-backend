@@ -16,7 +16,7 @@ module.exports = {
 	},
 	show: async (req, res, next) => {
 		try {
-			const data = await bookmarkService.getBookmarkPerUser(req.user._id)
+			const data = await bookmarkService.getBookmarkPerUser(req.body.bookmark)
 			res.send({
 				success: true,
 				statusCode: 200,
