@@ -49,9 +49,7 @@ module.exports = {
 				// 	resp.push(doc[i])
 				// }
 				let resp = []
-				let doc = await News.find({
-					createdAt: { $gt: await getToday() },
-				})
+				let doc = await News.find()
 					.select('-news -createdAt -updatedAt -__v')
 					.sort({
 						createdAt: 'desc',
